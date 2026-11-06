@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#1b5f8a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ocean Frontier" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon-180.png" />
+    <title>Ocean Frontier</title>
+    <style>html,body{background:#1b5f8a;height:100%;margin:0}#loading{color:#fff;z-index:100;background:linear-gradient(#2a8fb8,#1b5f8a);flex-direction:column;justify-content:center;align-items:center;gap:12px;font-family:Hiragino Maru Gothic ProN,Hiragino Sans,sans-serif;transition:opacity .5s;display:flex;position:fixed;top:0;bottom:0;left:0;right:0}#loading.done{opacity:0;pointer-events:none}#loading h1{letter-spacing:.04em;text-shadow:0 3px #0003;margin:0;font-size:34px}#loading p{opacity:.85;margin:0}#loading button{color:#1b5f8a;font:inherit;background:#fff;border:0;border-radius:999px;margin-top:18px;padding:12px 22px;font-weight:700}</style>
+    <script type="module" crossorigin src="/game/ocean/assets/index-BFyd87Kt.js"></script>
+    <link rel="modulepreload" crossorigin href="/game/ocean/assets/three-CjXPtAxO.js">
+    <link rel="stylesheet" crossorigin href="/game/ocean/assets/index-DNOuZyGT.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="loading"><h1>Ocean Frontier</h1><p>海に漕ぎ出す準備をしています…</p></div>
+    <script>
+      // 起動の見張り: 読み込みが途中で止まったら（デプロイ直後に古いファイルをつかんだときなど）、
+      // キャッシュと Service Worker を消して最新版を読み直すボタンを出す
+      setTimeout(function () {
+        var el = document.getElementById('loading');
+        if (!el || el.classList.contains('done')) return;
+        var b = document.createElement('button');
+        b.textContent = '最新版を読み込み直す';
+        b.onclick = function () {
+          b.disabled = true;
+          var jobs = [];
+          if ('serviceWorker' in navigator)
+            jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) {
+              return Promise.all(rs.filter(function (r) { return new URL(r.scope).pathname === location.pathname.replace(/[^/]*$/, ''); }).map(function (r) { return r.unregister(); }));
+            }));
+          if (window.caches)
+            jobs.push(caches.keys().then(function (ks) {
+              return Promise.all(ks.filter(function (k) { return k.indexOf('ocean-frontier-') === 0; }).map(function (k) { return caches.delete(k); }));
+            }));
+          Promise.all(jobs).catch(function () {}).then(function () { location.reload(); });
+        };
+        var p = document.createElement('p');
+        p.textContent = '起動に時間がかかっています。セーブデータは消えません。';
+        el.append(p, b);
+      }, 12000);
+    </script>
+  </body>
+</html>
