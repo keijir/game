@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#1b2a41" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="JOB WARS 2" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <title>JOB WARS 2 防衛線</title>
+    <script type="module" crossorigin src="/game/jobwars2/assets/index-gjm7QkjF.js"></script>
+    <link rel="modulepreload" crossorigin href="/game/jobwars2/assets/three-Bn1Cmqgq.js">
+    <link rel="stylesheet" crossorigin href="/game/jobwars2/assets/index-BqgvYytx.css">
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <div id="touch"></div>
+
+    <div id="hud">
+      <div class="top">
+        <div class="row1">
+          <span class="stage" data-hud="stage"></span>
+          <span class="wave" data-hud="wave"></span>
+          <span class="left" data-hud="left"></span>
+        </div>
+        <div class="row2">
+          <div class="base"><span class="tag">拠点</span><div class="bar"><i data-hud="baseBar"></i></div><b data-hud="baseNum"></b></div>
+          <div class="money"><span class="coin"></span><b data-hud="money"></b></div>
+        </div>
+        <div class="row2 hidden" data-hud="second"><div class="base"><span class="tag second" data-hud="secondName"></span><div class="bar"><i data-hud="secondBar"></i></div><b data-hud="secondNum"></b></div></div>
+        <div class="boss-box hidden" data-hud="boss"><span data-hud="bossName">ボス</span><div class="bar"><i data-hud="bossBar"></i><b class="shield" data-hud="shieldBar"></b></div></div>
+      </div>
+      <div class="forecast hidden" data-hud="forecast"></div>
+      <div class="banner" data-hud="banner"></div>
+      <div class="arrows" data-hud="arrows"></div>
+      <div class="sheet hidden" data-hud="sheet"></div>
+      <div class="hero-box">
+        <button class="hero-btn" data-hud="heroBtn" aria-label="主人公を見る">主任</button>
+        <div class="hero-info"><div class="bar"><i data-hud="heroBar"></i></div><span data-hud="heroState"></span></div>
+      </div>
+      <button id="special" class="special" aria-label="一喝（必殺技）"><span>一喝</span></button>
+      <div class="corner">
+        <button id="speed" class="icon-btn" aria-label="速さ">×1</button>
+        <button id="pause" class="icon-btn" aria-label="一時停止">II</button>
+      </div>
+      <div id="fps" class="hidden"></div>
+
+      <div class="overlay hidden" data-hud="end">
+        <!-- 結果: 見出しとボタンは常に画面の中に固定し、もらった物が多いときは真ん中だけが動く -->
+        <div class="card end-card">
+          <h2 data-hud="endTitle"></h2>
+          <div class="stars" data-hud="endStars"></div>
+          <p data-hud="endSub"></p>
+          <div class="reward" data-hud="reward"></div>
+          <div class="end-btns">
+            <button class="primary" data-hud="title">ロビーへ戻る</button>
+            <div class="end-row">
+              <button class="secondary" data-hud="next">次のステージへ</button>
+              <button class="secondary" data-hud="retry">もう一度</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ロビー（ホーム）。1 画面に収め、ページ全体はスクロールしない。長い一覧はタブの中の枠だけ動く -->
+    <div id="title" class="lobby">
+      <div class="lb-top">
+        <button class="lb-lv" data-tab="hero" aria-label="主人公を見る">
+          <span class="lb-badge" id="lbLv">1</span>
+          <span class="lb-who"><b id="lbJob">主任</b><span class="lb-row"><span class="lb-xp"><i id="lbXp"></i></span><small id="lbRank"></small></span></span>
+        </button>
+        <span class="lb-logo">JOB WARS <em>2</em></span>
+        <span class="lb-pill" id="lbStars">★ 0</span>
+        <button class="lb-pill" id="lbCoins" data-tab="hq" aria-label="本社の投資">💰 0</button>
+      </div>
+      <div class="lb-body">
+        <section class="lb-pane lb-home" data-pane="home">
+          <div class="lb-stage" id="lbStageHome" aria-label="主人公（なぞると向きが変わる・タップで武器を振る）">
+            <div class="lb-goal" id="lbGoal"></div>
+            <div class="lb-bubble hidden" id="lbBubble"></div>
+          </div>
+          <button class="lb-sortie" id="start">
+            <span class="lb-go">出社する</span>
+            <span class="lb-where" id="lbWhere"></span>
+            <span class="lb-rlv" id="lbRlv"></span>
+          </button>
+        </section>
+        <section class="lb-pane lb-sheet hidden" data-pane="hero">
+          <div class="lb-stage small" id="lbStageHero"></div>
+          <div class="lb-scroll hero-panel" id="lbHero"></div>
+        </section>
+        <section class="lb-pane lb-sheet hidden" data-pane="stages">
+          <div class="rt" id="stagePick"></div>
+          <div class="mode-pick hidden" id="modePick"></div>
+          <div class="stage-info rt-info" id="stageInfo"></div>
+          <button class="primary lb-start" id="start2">このステージに出社する</button>
+        </section>
+        <section class="lb-pane lb-sheet hidden" data-pane="hq">
+          <div class="lb-scroll hero-panel" id="lbHq"></div>
+        </section>
+        <section class="lb-pane lb-sheet hidden" data-pane="book">
+          <div class="lb-scroll">
+            <h2 class="lb-h">記録と遊び方</h2>
+            <div id="lbAwards"></div>
+              <details class="howto-box" open>
+                <summary>遊び方</summary>
+                <ul class="howto">
+                  <li><b>守る</b> 敵は決まった<b>侵入口</b>から、決まった<b>ルート</b>を通って拠点へ向かう。拠点に着かれると耐久が減り、0 で負け</li>
+                  <li><b>準備</b> 波の前に予告が出る（どの入口から・何が・何体）。地図の上を流れる印が、次に敵が通る道。建て終えたら「敵を呼ぶ」で開始</li>
+                  <li><b>建てる</b> 地図の<b>光る＋の台</b>をタップ → 下に出る一覧から設備を選ぶ（射程と<b>撃てる道（緑）</b>が出る）→「ここに建てる」。建てた設備をタップすると強化・売却。準備の間も波の間も建てられる</li>
+                  <li><b>主人公</b> 地面をタップでそこへ走る。近くの敵を自動で攻撃し、3 体まで足止め。近くの設備を速くし（指揮）、傷ついた設備を直す。ゲージがたまったら<b>一喝</b></li>
+                  <li><b>地図</b> なぞると動かす。2 本指でズーム・ひねって回転（PC はホイール・右ドラッグ・Q/E）</li>
+                </ul>
+              </details>
+              <details class="howto-box">
+                <summary>設備と敵</summary>
+                <div id="guide"></div>
+              </details>
+            <button class="secondary lb-mute" id="mute2">効果音: 入</button>
+            <button class="secondary lb-mute" id="bgm2">BGM: 入</button>
+          </div>
+        </section>
+      </div>
+      <nav class="lb-nav">
+        <button data-tab="home" class="on"><i>🏢</i>ロビー</button>
+        <button data-tab="hero"><i>🧑‍💼</i>主人公<em class="lb-dot hidden" data-dot="hero"></em></button>
+        <button data-tab="stages" class="mid"><i>🚉</i>出撃</button>
+        <button data-tab="hq"><i>📈</i>強化<em class="lb-dot hidden" data-dot="hq"></em></button>
+        <button data-tab="book"><i>📒</i>記録<em class="lb-dot hidden" data-dot="book"></em></button>
+      </nav>
+    </div>
+
+
+    <div class="overlay hidden" id="paused">
+      <div class="card">
+        <h2>一時停止</h2>
+        <button class="primary" id="resume">つづける</button>
+        <button class="secondary" id="restart">はじめから</button>
+        <button class="secondary" id="toTitle">ロビーへ戻る</button>
+        <button class="secondary" id="mute">効果音: 入</button>
+        <button class="secondary" id="bgm">BGM: 入</button>
+        <p class="ver" id="ver"></p>
+      </div>
+    </div>
+    <div id="glLost" class="hidden"></div>
+    <div id="update" class="hidden">新しい版があります <button id="reload">更新</button></div>
+  </body>
+</html>

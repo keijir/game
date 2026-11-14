@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#1f7f95" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="しおさい浮島" />
+    <link rel="icon" type="image/svg+xml" href="icon.svg" />
+    <link rel="apple-touch-icon" href="icon-180.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <title>しおさい浮島</title>
+    <script type="module" crossorigin src="/game/ukishima/assets/index-CxEXFJaE.js"></script>
+    <link rel="stylesheet" crossorigin href="/game/ukishima/assets/index-pTKQhgPk.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="game"></div>
+      <div id="hud">
+        <header class="topbar">
+          <div class="title-row">
+            <h1 class="title">しおさい浮島</h1>
+            <div class="level" aria-label="プレイヤーレベル">
+              <span class="lv">Lv<b id="hud-level">1</b></span>
+              <span class="xpbar"><i id="hud-xp"></i></span>
+            </div>
+            <button class="icon-btn" id="btn-menu" aria-label="メニュー">☰</button>
+          </div>
+          <div class="res-row">
+            <span class="chip coin" title="コイン">🪙 <b id="hud-coins">0</b></span>
+            <span class="chip" title="魚">🐟 <b id="hud-fish">0</b><small>/<span id="hud-fishcap">30</span></small></span>
+            <span class="chip" title="木材">🪵 <b id="hud-wood">0</b></span>
+            <span class="chip" title="石材">🪨 <b id="hud-stone">0</b></span>
+            <span class="chip" title="金属">⚙️ <b id="hud-metal">0</b></span>
+            <span class="chip" title="加工品">🍢 <b id="hud-goods">0</b></span>
+          </div>
+          <button class="quest-banner" id="quest-banner">
+            <span class="quest-tag">目標</span>
+            <span class="quest-text"><b id="quest-title"></b><small id="quest-desc"></small></span>
+            <span class="quest-prog" id="quest-prog"></span>
+          </button>
+        </header>
+
+        <div id="toasts" aria-live="polite"></div>
+
+        <nav class="bottombar">
+          <button data-panel="facilities"><span class="ico">🏠</span>施設</button>
+          <button data-panel="build"><span class="ico">🔨</span>建設</button>
+          <button data-panel="resources"><span class="ico">🎒</span>資源</button>
+          <button data-panel="quests"><span class="ico">📜</span>クエスト</button>
+          <button data-panel="upgrade"><span class="ico">⬆️</span>強化</button>
+        </nav>
+
+        <div id="modal" class="modal" hidden>
+          <div class="sheet" role="dialog" aria-modal="true">
+            <div class="sheet-head">
+              <h2 id="modal-title"></h2>
+              <button class="icon-btn" id="modal-close" aria-label="閉じる">✕</button>
+            </div>
+            <div id="modal-body" class="sheet-body"></div>
+          </div>
+        </div>
+      </div>
+      <div id="boot">
+        <div class="boot-inner">
+          <div class="boot-title">しおさい浮島</div>
+          <div class="boot-sub">潮の香りを集めています…</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
