@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#1b2a41" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="JOB WARS" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <title>JOB WARS 社会人サバイバーズ</title>
+    <script type="module" crossorigin src="/game/jobwars/assets/index-DPYzKbLb.js"></script>
+    <link rel="modulepreload" crossorigin href="/game/jobwars/assets/three-Dc2l2mzY.js">
+    <link rel="stylesheet" crossorigin href="/game/jobwars/assets/index-BTInRTkh.css">
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <div id="touch"></div>
+
+    <div id="hud">
+      <div class="top">
+        <div class="bar-box" data-hud="progressBox">
+          <div class="label"><span data-hud="stageName">東京オフィス街</span><span data-hud="progressText"></span></div>
+          <div class="bar"><i data-hud="progressBar" class="progress"></i></div>
+        </div>
+        <div class="bar-box boss hidden" data-hud="bossBox">
+          <div class="label"><span data-hud="bossName">締切魔人</span><span data-hud="bossDeadline"></span></div>
+          <div class="bar big"><i data-hud="bossBar" class="boss"></i><em data-hud="bossHp"></em></div>
+        </div>
+        <div class="row">
+          <div class="left">
+            <div class="mini-bar" data-hud="targetBox">
+              <span class="tag" data-hud="targetTag">本社</span>
+              <div class="bar"><i data-hud="targetBar" class="target"></i></div>
+              <span class="num" data-hud="targetHp"></span>
+            </div>
+            <div class="mini-bar" data-hud="heroBox">
+              <span class="tag hero" data-hud="heroTag">主人公</span>
+              <div class="bar"><i data-hud="heroBar" class="hero"></i></div>
+              <span class="num" data-hud="heroHp"></span>
+            </div>
+            <div class="weapon" data-hud="weaponBox">
+              <span class="lv" data-hud="heroLv"></span><span class="wname" data-hud="weaponName"></span><span class="next" data-hud="weaponNext"></span>
+              <div class="bar xp"><i data-hud="xpBar" class="xp"></i></div>
+            </div>
+            <div class="chips">
+              <span class="chip kills"><b>撃破</b><span data-hud="kills"></span></span>
+              <span class="chip coin"><b>成果</b><span data-hud="coins"></span></span>
+            </div>
+          </div>
+          <canvas id="minimap" width="84" height="128"></canvas>
+        </div>
+      </div>
+      <div class="combo hidden" data-hud="combo"><b data-hud="comboN"></b><span>連続撃破</span><em data-hud="comboTag"></em></div>
+      <div class="banner" data-hud="banner"></div>
+      <div class="tip hidden" data-hud="tip" role="status">
+        <div class="tip-title" data-hud="tipTitle"></div>
+        <ul data-hud="tipBody"></ul>
+        <div class="tip-close">触ると閉じる</div>
+      </div>
+      <div class="warn hidden" data-hud="warn">本社が攻撃されている！</div>
+      <div class="guide-edge hidden" data-hud="guideEdge"><i>➤</i><span>タップで建てる</span></div>
+      <button id="pause" class="icon-btn" aria-label="一時停止">II</button>
+      <div class="squad-box hidden">
+        <div class="alliances" data-hud="alliances"></div>
+        <div class="squad" data-hud="squad"></div>
+      </div>
+      <button id="command" class="command hidden" aria-label="号令（必殺技）"><span class="cmd-label">号令</span><span class="cmd-n" data-hud="cmdN"></span></button>
+      <div class="pad-pick hidden" data-hud="padPick">
+        <div class="pp-title" data-hud="padTitle">空いている札　何を建てる？</div>
+        <div class="pp-row" data-hud="padRow"></div>
+        <div class="pp-note">選ぶと、成果が足りていればすぐ建つ。足りなければ札に値段が出る</div>
+      </div>
+      <div class="cam-btns">
+        <button id="rotL" class="icon-btn small" aria-label="カメラを左に回す">⟲</button>
+        <button id="rotR" class="icon-btn small" aria-label="カメラを右に回す">⟳</button>
+      </div>
+      <div class="vignette"></div>
+      <div id="fps" class="hidden"></div>
+
+      <div class="overlay hidden" data-hud="end">
+        <div class="card">
+          <h2 data-hud="endTitle"></h2>
+          <p data-hud="endSub"></p>
+          <div class="stats" data-hud="endStats"></div>
+          <button class="primary" data-hud="retry">職業を選んで、もう一度</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="title">
+      <div class="card jobs-card">
+        <div class="logo">JOB WARS</div>
+        <div class="stage-pick" id="stagePick"></div>
+        <div class="sub">きょうは だれで 出社する？</div>
+        <div class="job-grid" id="jobGrid"></div>
+        <div class="job-pick" id="jobPick"></div>
+        <button class="primary" id="start">この職業で出社する</button>
+        <details class="howto-box">
+          <summary>遊び方</summary>
+          <ul class="howto">
+            <li><b>移動</b> 行きたい場所をタップ（押したまま動かすと追いかける。PC はクリック・WASD・矢印キー）</li>
+            <li><b>視点</b> 2 本指でつまむとズーム、ひねる・左右になぞると回転（⟲⟳ は 45° ずつ。PC はホイール・右ドラッグ・Q／E）</li>
+            <li><b>攻撃</b> 近くの敵を自動で攻撃。倒すほど Lv が上がり、Lv.4・7・10 で武器が進化する</li>
+            <li><b>建てる</b> 地面の札に立つと、成果が流れ込んで建つ。空いている札は、何を建てるか下のボタンで選ぶ（もう一度払うと強化）</li>
+            <li><b>勝ち</b> 最後の波のあとに現れるボスを倒す。クリアすると新しい職業と、次のステージが使えるようになる</li>
+            <li><b>負け</b> 守る建物が落とされる（商店街は老舗 3 軒のうち 2 軒）</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="paused">
+      <div class="card">
+        <h2>一時停止</h2>
+        <button class="primary" id="resume">つづける</button>
+        <button class="secondary" id="restart">はじめから</button>
+        <button class="secondary" id="mute">効果音: 入</button>
+      </div>
+    </div>
+    <div id="update" class="hidden">新しい版があります <button id="reload">更新</button></div>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#1b2a41"/>
+  <rect x="40" y="300" width="432" height="150" rx="20" fill="#2c4466"/>
+  <!-- 3 人のシルエット（サラリーマン・ジムトレーナー・つけ麺屋） -->
+  <g>
+    <rect x="96" y="250" width="70" height="120" rx="14" fill="#d9692b"/>
+    <rect x="106" y="190" width="50" height="50" rx="10" fill="#f2c9a0"/>
+    <rect x="221" y="220" width="70" height="150" rx="14" fill="#3b5b92"/>
+    <rect x="231" y="150" width="50" height="58" rx="10" fill="#f2c9a0"/>
+    <rect x="250" y="230" width="12" height="70" fill="#ffc107"/>
+    <rect x="346" y="250" width="70" height="120" rx="14" fill="#f3efe6"/>
+    <rect x="356" y="190" width="50" height="50" rx="10" fill="#f0c49b"/>
+    <rect x="352" y="182" width="58" height="12" fill="#ffffff"/>
+  </g>
+  <text x="256" y="110" font-family="Arial Black, sans-serif" font-size="92" font-weight="900" text-anchor="middle" fill="#ffd600">JOB WARS</text>
+</svg>

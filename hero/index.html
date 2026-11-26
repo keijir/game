@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#3a1f2e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="RUST EATER" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <meta name="description" content="RUST EATER — 錆びた機械を喰らい、その力を取り込んで強くなる見下ろしアクション" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="RUST EATER 錆喰いの回収屋" />
+    <meta property="og:description" content="錆びた機械を喰らい、その力を取り込んで強くなる見下ろしアクション" />
+    <meta property="og:url" content="https://keijir.github.io/game/hero/" />
+    <meta property="og:image" content="https://keijir.github.io/game/hero/ogp.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>RUST EATER</title>
+    <style>#splash{z-index:50;color:#fff;background:#3a1f2e;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,Hiragino Sans,sans-serif;transition:opacity .5s;position:fixed;top:0;bottom:0;left:0;right:0;overflow:hidden}#splash.out{opacity:0;pointer-events:none}.splash-art{object-fit:cover;object-position:center bottom;width:100%;height:100%;position:absolute;top:0;bottom:0;left:0;right:0}.splash-title{left:0;right:0;top:max(56px, env(safe-area-inset-top));text-align:center;position:absolute}.splash-title h1{width:min(92vw,420px);margin:0 auto;line-height:0}.splash-title h1 img{width:100%;height:auto;display:block}.splash-title p{letter-spacing:3px;color:#3ff2e6;-webkit-text-stroke:4px #0e2a32;paint-order:stroke fill;text-shadow:0 3px #0e2a32;margin:10px 0 0;font-size:20px;font-weight:800}.splash-bottom{left:16px;right:16px;bottom:max(28px, env(safe-area-inset-bottom));text-align:center;position:absolute}.splash-hint{background:#140c0a73;border-radius:16px;margin-bottom:18px;padding:8px 12px;font-size:14px;font-weight:700;line-height:1.5}.splash-hint b{color:#ffb36b;font-size:17px;display:block}.splash-status{text-shadow:0 2px #000;margin-bottom:8px;font-size:18px;font-weight:800}.splash-status.ready{color:#3ff2e6;-webkit-text-stroke:4px #0e2a32;paint-order:stroke fill;animation:1.1s ease-in-out infinite splashPulse}.splash-bar{background:#4a1e14;border:3px solid #1e0f0a;border-radius:11px;height:22px;position:relative;overflow:hidden}.splash-bar i{background:linear-gradient(#ffc76b,#ff8a2a);width:0;transition:width .25s;position:absolute;top:0;bottom:0;left:0}.splash-bar span{text-shadow:0 1px 2px #000;font-size:14px;font-weight:900;line-height:16px;position:relative}@keyframes splashPulse{50%{opacity:.55}}</style>
+    <script type="module" crossorigin src="/game/hero/assets/index-BX-bAcoN.js"></script>
+    <link rel="modulepreload" crossorigin href="/game/hero/assets/three-aFkua3tG.js">
+    <link rel="stylesheet" crossorigin href="/game/hero/assets/index-Dwkv0Cb9.css">
+  </head>
+  <body>
+    <!-- iPhone の縦 1 画面に収める。ページ全体はスクロールしない -->
+    <canvas id="game"></canvas>
+    <!-- 起動画面: JS より先に出す。読み込みが終わったらタップで始める（src/ui/splash.ts） -->
+    <div id="splash">
+      <img class="splash-art" src="./art/splash.webp" alt="" />
+      <div class="splash-title">
+        <h1><img src="./art/logo.webp" alt="RUST EATER" width="800" height="301" /></h1>
+        <p>錆喰いの回収屋</p>
+      </div>
+      <div class="splash-bottom">
+        <div class="splash-hint"><b>ヒント：</b><span id="splashHint">壊した機械や瓦礫の力は、永久にあなたのものになる。</span></div>
+        <div class="splash-status" id="splashStatus">読み込み中…</div>
+        <div class="splash-bar"><i id="splashBar"></i><span id="splashPct">0%</span></div>
+      </div>
+    </div>
+    <div id="touch"></div>
+    <div id="stick"><i></i></div>
+    <div id="hud"></div>
+    <div id="update" class="hidden">新しい版があります <button id="reload">更新</button></div>
+    <div id="glLost" class="hidden">画面を描けませんでした。再読み込みしてください。</div>
+  </body>
+</html>
